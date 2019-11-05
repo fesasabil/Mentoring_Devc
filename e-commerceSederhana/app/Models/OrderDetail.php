@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Order;
 use App\Models\Price;
+use App\Models\Product;
 
 class OrderDetail extends Model
 {
@@ -20,5 +21,10 @@ class OrderDetail extends Model
     public function prices()
     {
         return $this->morphMany(Price::class, 'priceable');
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }
