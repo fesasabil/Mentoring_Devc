@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::namespace('Categories')->group(function() {
+    Route::resource('categories', 'CategoryController');
+    Route::get('remove-image-category', 'CategoryController@removeImage')->name('category.remove.image');
+});

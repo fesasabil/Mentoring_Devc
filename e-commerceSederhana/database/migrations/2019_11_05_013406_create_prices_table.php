@@ -15,10 +15,10 @@ class CreatePricesTable extends Migration
     {
         Schema::create('prices', function (Blueprint $table) {
             $table->increments('id');
-            // $table->integer('product_id')->unsigned();
-            // $table->foreign('product_id')->references('id')->on('products');
-            // $table->string('history');
-            $table->morphs('priceable');
+            $table->integer('pricetable_id');
+            $table->string('pricetable_type');
+            $table->integer('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
