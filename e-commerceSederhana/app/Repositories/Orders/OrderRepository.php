@@ -133,13 +133,21 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     /**
      * Send email notification to the admin
      */
-    public function sendEmailNotificationToAdmin()
-    {
+    // public function sendEmailNotificationToAdmin()
+    // {
         
+    // }
+
+     /**
+     * @param string $text
+     * @return mixed
+     */
+    public function searchOrder(String $text): Collection
+    {
+        if (!empty($text)) {
+            return $this->model->searchForOrder($text)->get();
+        } else {
+            $this->listOrders();
+        }
     }
-
-
-
-
-
 }

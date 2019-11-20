@@ -9,7 +9,7 @@ use Jsdecena\Baserepo\BaseRepositoryInterface;
 
 interface CategoryRepositoryInterface extends BaseRepositoryInterface
 {
-    public function listCategories(string $order = 'id', $sort = 'desc', $except = []): Collection;
+    public function listCategories(string $order = 'id', string $sort = 'desc', $except = []): Collection;
 
     public function createCategory(array $params): Category;
 

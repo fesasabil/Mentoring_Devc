@@ -13,9 +13,9 @@ class Product extends Model
         'name', 'slug', 'category_id', 'description',
     ];
 
-    public function categories()
+    public function category()
     {
-        return $this->hasMany(Category::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function prices()

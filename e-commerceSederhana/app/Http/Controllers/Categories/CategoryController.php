@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Categories;
 
 use Illuminate\Http\Request;
-use App\Repositories\Categories\CategoryRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Repositories\Categories\Requests\CreateCategoryRequest;
+use App\Repositories\Categories\CategoryRepositoryInterface;
 use App\Repositories\Categories\CategoryRepository;
 
 class CategoryController extends Controller

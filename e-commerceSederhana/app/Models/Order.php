@@ -11,8 +11,8 @@ class Order extends Model
         'invoice', 'discounts', 'total'
     ];
 
-    public function orderDetail()
+    public function orderDetails()
     {
-        return $this->belongsTo(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class);
     }
 }

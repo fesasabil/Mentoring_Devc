@@ -14,9 +14,9 @@ class Category extends Model
     /**
      * Relation one to many to product
      */
-    public function product()
+    public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
     }
 
 
