@@ -9,6 +9,8 @@ use App\Models\OrderDetail;
 
 class Product extends Model
 {
+    protected $guarded = [];
+
     protected $fillable = [
         'name', 'slug', 'category_id', 'description',
     ];
