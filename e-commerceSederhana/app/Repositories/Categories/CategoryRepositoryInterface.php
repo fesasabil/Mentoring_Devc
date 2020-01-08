@@ -21,6 +21,6 @@ interface CategoryRepositoryInterface extends BaseRepositoryInterface
 
     public function associateProduct(Product $product);
 
-    public function rootCategories(string $string, string $string1);
+    public function rootCategories(string $order = 'id', string $sort = 'desc', $except = []): Collection;
 
 }

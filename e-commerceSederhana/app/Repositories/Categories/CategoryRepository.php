@@ -48,10 +48,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
      */
     public function rootCategories(string $order = 'id', string $sort = 'desc', $except = []): Collection
     {
-        return $this->model->whereIsRoot()
-                        ->OrderBy($order, $sort)
-                        ->get()
-                        ->except($except);
+        return $this->model->OrderBy($order, $sort)->get()->except($except);
     }
 
     /**
