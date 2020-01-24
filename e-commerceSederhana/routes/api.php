@@ -18,6 +18,10 @@ use Illuminate\Http\Request;
 // });
 
 Route::group(['middleware' => 'api'], function () {
-    Route::post('/auth/signup', 'AuthController@signup');
-    Route::post('/auth/signin', 'AuthController@signin');
+    Route::post('/signup', 'Api\AuthController@signup');
+    Route::post('/signin', 'Api\AuthController@signin');
+    Route::post('/product/create', 'Api\ProductController@createProducts');
+    Route::get('/product/show', 'Api\ProductController@showProducts');
+    Route::put('product/update/{product}', 'Api\ProductController@update');
+    Route::delete('product/delete/{product}', 'Api\ProductController@delete');
 });
