@@ -5,13 +5,15 @@ namespace App\Transformers\Products;
 use App\Models\Product;
 use League\Fractal\TransformerAbstract;
 use App\Transformers\Categories\CategoryTransformer;
+use App\Transformers\Prices\PriceTransformer;
 
 class ProductTransformer extends TransformerAbstract
 {
     protected $availableIncludes = [
-        'category'
+        // 'categories',
+        'prices' 
     ];
-    
+
     public function transform(Product $product)
     {
         return [
@@ -27,8 +29,15 @@ class ProductTransformer extends TransformerAbstract
 
     public function includeCategories(Product $product)
     {
-        $category = $product->category;
+        $categories = $product->categories;
 
-        return $this->collection($category, new CategoryTransformer);
+        return $this->collection($categories, new CategoryTransformer);
+    }
+
+    public function includePrices(Product $product)
+    {
+        $prices = $product->prices;
+
+        return $this->collection($prices, new PriceTransformer);
     }
 }

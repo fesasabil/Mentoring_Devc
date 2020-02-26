@@ -4,11 +4,15 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Price;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
+use App\Transformers\Prices\PriceTransformer;
 use App\Transformers\Products\ProductTransformer;
-use App\Repositories\Products\ProductRepository;
-use App\Repositories\Products\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Builder;
+// use App\Repositories\Products\ProductRepository;
+// use App\Repositories\Products\ProductRepositoryInterface;
 
 class ProductController extends Controller
 {
@@ -26,7 +30,7 @@ class ProductController extends Controller
     public function createProducts(Request $request, Product $product)
     {
         $this->validate($request, [
-            'name'          => 'required|min:8',
+            'name'          => 'required|max:100',
             // 'image'         => 'mimes:jpg,png,jpeg',
             'description'   => 'required',
         ]);
@@ -42,7 +46,6 @@ class ProductController extends Controller
         $response = fractal()
             ->item($product)
             ->transformWith(new ProductTransformer)
-            // ->includeCategory()
             ->toArray();
 
         return response()->json($response, 201);
@@ -55,6 +58,7 @@ class ProductController extends Controller
         $response = fractal()
             ->collection($product)
             ->transformWith(new ProductTransformer)
+            ->includeCategories()
             ->toArray();
 
         return response()->json($response, 200);
@@ -68,18 +72,37 @@ class ProductController extends Controller
 
         $product->save();
 
-        return fractal()
+        $response = fractal()
             ->item($product)
             ->transformWith(new ProductTransformer)
             ->toArray();
+        
+        return response()->json($response, 200);
     }
 
-    public function delete(Product $product)
+    public function delete($id)
     {
+        $product = Product::find($id);
         $product->delete();
 
         return response()->json([
             'message' => 'Product deleted',
         ]);
+    }
+
+    public function detailProduct(Product $product)
+    {
+        $products = $product->all();
+        
+
+        $response = fractal()
+            ->collection($products)
+            ->transformWith(new ProductTransformer)
+            ->includePrices()
+            // ->includeCategories()
+            ->toArray();
+
+        return response()->json($response, 200);
+
     }
 }

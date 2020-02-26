@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class AuthController extends Controller
 {
@@ -15,15 +17,22 @@ class AuthController extends Controller
     {
         $this->validate($request, [
             'username' => 'required|unique:users',
-            'email'    => 'required|unique:users',
+            'email'    => 'required|unique:users|email',
             'password' => 'required|min:8'
         ]);
 
-        return User::create([
+        // if ($this->fails()) {
+        //     return response()->json($this->errors()->toJson(), 400);
+        // }
+
+        $user = User::create([
             'username' => $request->json('username'),
             'email'    => $request->json('email'),
             'password' => Hash::make($request->json(['password']))
         ]);
+
+        $token = JWTAuth::fromUser($user);
+        return response()->json(compact('user', 'token'), 201);
     }
 
     public function signin(Request $request)
@@ -59,5 +68,21 @@ class AuthController extends Controller
             'username' => $request->user()->username,
             'token'    => $token
         ]);
+    }
+
+    public function getAuthenticatedUser()
+    {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user not found'], 404);
+            }
+        } catch (TokenExpiredException $e) {
+            return response()->json(['token expired'], $e->getStatusCode());
+        } catch (TokenInvalidException $e) {
+            return response()->json(['token invalid'], $e->getStatusCode());
+        } catch (JWTException $e) {
+            return response()->json(['token absent'], $e->getStatusCode());
+        }
+        return response()->json(compact('user'));
     }
 }

@@ -9,10 +9,12 @@ use App\Models\OrderDetail;
 
 class Product extends Model
 {
+    protected $primaryKey = 'productId';
+
     protected $guarded = [];
 
     protected $fillable = [
-        'name', 'slug', 'category_id', 'description',
+        'name', 'slug', 'category_id', 'description', 'image'
     ];
 
     public function category()

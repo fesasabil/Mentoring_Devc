@@ -15,12 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::namespace('Categories')->group(function() {
-    Route::resource('categories', 'CategoryController');
-    Route::get('remove-image-category', 'CategoryController@removeImage')->name('category.remove.image');
-});
+// Route::namespace('Categories')->group(function() {
+//     Route::resource('categories', 'CategoryController');
+//     Route::get('remove-image-category', 'CategoryController@removeImage')->name('category.remove.image');
+// });
 
-Route::namespace('Orders')->group(function() {
-    Route::resource('orders', 'OrderController');
-    Route::get('orders/{id}/invoice', 'OrderController@generateInvoice')->name('orders.invoice.generate');
-});
+// Route::namespace('Orders')->group(function() {
+//     Route::resource('orders', 'OrderController');
+//     Route::get('orders/{id}/invoice', 'OrderController@generateInvoice')->name('orders.invoice.generate');
+// });
